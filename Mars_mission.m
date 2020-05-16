@@ -1,6 +1,6 @@
 function [dy] = Mars_mission(t,y)
 
-mu_M = 42828;
+mu_M = 42828*(1e9);
 ga_M = 1.29;
 R_M = 191.8;
 alpha = -16;
@@ -8,7 +8,8 @@ r_M = 3390*1000;
 A = 19;
 
 w = Fspeed(y(1),y(3));
-[T, P, rho] = Mars_atm(y(3))
+h = y(3) - r_M;
+[T, P, rho] = Mars_atm(h);
 c = sqrt(R_M*ga_M*T);
 M = y(1)/c;
 
