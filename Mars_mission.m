@@ -11,10 +11,10 @@ w = Fspeed(y(1),y(3));
 h = y(3) - r_M;
 [T, P, rho] = Mars_atm(h);
 c = sqrt(R_M*ga_M*T);
-M = y(1)/c
+M = y(1)/c;
 
 
-[Cl,Cd,l_d] = Ae_coeff(M,alpha)
+[Cl,Cd,l_d] = Ae_coeff(M,alpha);
 
 q = (0.5)*rho*(w^2);
 L = q*A*Cl;

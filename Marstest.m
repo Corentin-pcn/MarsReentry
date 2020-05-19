@@ -25,6 +25,8 @@ mf = mi/exp(dva/ISP);
 
 [t,y] = ode15s(@Mars_mission,[0:0.1:2000], [v0 gamma0 ratm 0 mf]);
 
+h = y(:,3) - r_M;
+
 figure(1)
 plot(t,y(:,1))
 
@@ -32,4 +34,14 @@ figure(2)
 plot(t,y(:,2))
 
 figure(3)
-plot(y(:,4),(y(:,3)-r_M)/1000)
+plot(y(:,4),h/1000)
+
+
+for i = h
+    [T, P, rho] = Mars_atm(i);
+end
+
+heat_flux = HeatFlux(y(:,1), 16, rho);
+hf_integrated = cumtrapz(heat_flux);
+
+max_q = max(hf_integrated)
