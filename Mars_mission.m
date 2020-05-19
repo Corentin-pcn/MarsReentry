@@ -8,20 +8,20 @@ r_M = 3390*1000;
 A = 19;
 
 w = Fspeed(y(1),y(3));
-disp(w)
 h = y(3) - r_M;
 [T, P, rho] = Mars_atm(h);
 c = sqrt(R_M*ga_M*T);
-M = y(1)/c;
+M = y(1)/c
 
 
 [Cl,Cd,l_d] = Ae_coeff(M,alpha)
 
-L = (0.5)*rho*(w^2)*A*Cl;
-D = (0.5)*rho*(w^2)*A*Cd;
+q = (0.5)*rho*(w^2);
+L = q*A*Cl;
+D = q*A*Cd;
 
-dy(1) = (-D/y(5))+((mu_M/(y(3)^2))*sin(y(2)));
-dy(2) = (-L/y(5)*y(1))+(mu_M/((y(3)^2)*y(1))-y(1)/y(3))*cos(y(2));
+dy(1) = -D/y(5)+( mu_M/y(3)^2 )*sin(y(2));
+dy(2) = -L/(y(5)*y(1))+(mu_M/((y(3)^2)*y(1))-y(1)/y(3))*cos(y(2));
 dy(3) = -y(1)*sin(y(2));
 dy(4) = (y(1)/y(3))*cos(y(2));
 dy(5) = 0;
