@@ -6,6 +6,8 @@ h = 75*1000; %between 0  and 120
 ISP = 3000;
 mu_M = 42828*(1e9);
 r_M = 3390*1000;
+ga_M = 1.29;
+R_M = 191.8;
 ratm = 120000+r_M;
 
 a0 = 500000 + r_M;
@@ -33,15 +35,22 @@ plot(t,y(:,1))
 figure(2)
 plot(t,y(:,2))
 
-figure(3)
-plot(y(:,4),h/1000)
-
-
 for i = h
     [T, P, rho] = Mars_atm(i);
 end
+c = sqrt(R_M*ga_M*T);
 
-heat_flux = HeatFlux(y(:,1), 16, rho);
+figure(1)
+plot(t,h/1000)
+
+figure(2)
+plot(t,y(:,2))
+
+figure(3)
+plot(y(:,1)./c,h/1000)
+
+
+heat_flux = HeatFlux(y(:,1), -16, rho);
 hf_integrated = cumtrapz(heat_flux);
 
 max_q = max(hf_integrated)

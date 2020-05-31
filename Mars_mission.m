@@ -13,18 +13,30 @@ h = y(3) - r_M;
 c = sqrt(R_M*ga_M*T);
 M = y(1)/c;
 
+if (M < 18)
+    alpha = -14
+end
 
 [Cl,Cd,l_d] = Ae_coeff(M,alpha);
 
 q = (0.5)*rho*(w^2);
 L = q*A*Cl;
 D = q*A*Cd;
+    
 
 dy(1) = -D/y(5)+( mu_M/y(3)^2 )*sin(y(2));
 dy(2) = -L/(y(5)*y(1))+(mu_M/((y(3)^2)*y(1))-y(1)/y(3))*cos(y(2));
 dy(3) = -y(1)*sin(y(2));
 dy(4) = (y(1)/y(3))*cos(y(2));
 dy(5) = 0;
+
+% if (and((M < 2),(M > 0.17)))
+%     dy(1) = (-280000)/y(5)+( mu_M/y(3)^2 )*sin(y(2));
+%     dy(2) = (mu_M/((y(3)^2)*y(1))-y(1)/y(3))*cos(y(2));
+%     dy(3) = -y(1)*sin(y(2));
+%     dy(4) = (y(1)/y(3))*cos(y(2));
+%     dy(5) = 0;
+% end
 
 if (y(3) < r_M)
     dy(1) = 0;
