@@ -29,28 +29,40 @@ mf = mi/exp(dva/ISP);
 
 h = y(:,3) - r_M;
 
-figure(1)
-plot(t,y(:,1))
-
-figure(2)
-plot(t,y(:,2))
-
 for i = h
     [T, P, rho] = Mars_atm(i);
 end
 c = sqrt(R_M*ga_M*T);
 
 figure(1)
+subplot(2,2,1);
 plot(t,h/1000)
+title('altitude in km')
+
+subplot(2,2,2);
+plot(t,y(:,1))
+title('speed in m/s')
+
+subplot(2,2,3);
+plot(t,y(:,2))
+title('Flight path angle in rad')
+
+subplot(2,2,4);
+plot(t,y(:,1)./c)
+title('Mach')
 
 figure(2)
-plot(t,y(:,2))
 
-figure(3)
-plot(y(:,1)./c,h/1000)
+subplot(2,1,1)
+plot(h/1000,y(:,1))
+title('speed by altitude')
+
+subplot(2,1,2)
+plot((r_M*y(:,4))/1000,y(:,1))
+title('speed by phi')
 
 
-heat_flux = HeatFlux(y(:,1), -16, rho);
-hf_integrated = cumtrapz(heat_flux);
+heat_flux = HeatFlux(y(:,1), -14, rho);
+hf_integrated = (trapz([0:0.1:2000],heat_flux)*0.0002778)
 
-max_q = max(hf_integrated)
+max_qd = max(heat_flux)
