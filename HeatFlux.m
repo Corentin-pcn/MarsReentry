@@ -20,6 +20,7 @@ function [HF] = HeatFlux(velocity, alpha, RHO)
 %   HF       :Numeric array of the heat flux in Watt per meters second squared. 
 
 w = velocity.*cosd(alpha);
+w = w/1000;
 [T, P, RHOsl] = Mars_atm(0);
 Rn = 1.125;
 if ~isnumeric(velocity)&&isnumeric(alpha)&&isnumeric(RHO)
@@ -27,20 +28,20 @@ if ~isnumeric(velocity)&&isnumeric(alpha)&&isnumeric(RHO)
 end
 HF = [];
 for i = length(w): -1 :1
-    if ( w(i) <= 7900 )
+    if ( w(i) <= 7.9 )
         BC = 9823.4;
         BR = 1135.7;
         CHIc = 3.15;
         CHIr = 8.5;
         PSIc = 0.5;
         PSIr = 1.6;
-        qd_conv = BC*(w(i)/3.048)^CHIc*(RHO(i)/RHOsl)^PSIc*sqrt(0.3048/Rn);
+        qd_conv = BC * (w(i)/3.048)^CHIc * (RHO(i)/RHOsl)^PSIc * sqrt(0.3048/Rn);
         qd_rad = BR*(w(i)/3.048)^CHIr*(RHO(i)/RHOsl)^PSIr*(0.3048/Rn);
         qd = qd_conv+qd_rad;
         HF = [HF qd];
     end
 
-    if ( w(i) > 7900 )
+    if ( w(i) > 7.9 )
         BC = 9823.4;
         BR = 85.174;
         CHIc = 3.15;
@@ -53,4 +54,5 @@ for i = length(w): -1 :1
         HF = [HF qd];
     end
 end
+
 end
