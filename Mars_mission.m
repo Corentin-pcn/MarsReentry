@@ -18,11 +18,12 @@ M = y(1)/c;
 % end
 
 if (M < 5)
-    alpha = -8;
+    alpha = -4;
 end
 
 if (M < 2)
     alpha = 0;
+    y(5) = 855;
 end
 
 [Cl,Cd,l_d] = Ae_coeff(M,alpha);
@@ -39,7 +40,7 @@ dy(4) = (y(1)/y(3))*cos(y(2));
 dy(5) = 0;
 
 if (and((M < 2),(M > 0)))
-    dy(1) = -D-3500/y(5)+( mu_M/y(3)^2 )*sin(y(2));
+    dy(1) = (-D-18284)/y(5)+( mu_M/y(3)^2 )*sin(y(2));
     dy(2) = -L/(y(5)*y(1))+(mu_M/((y(3)^2)*y(1))-y(1)/y(3))*cos(y(2));
     dy(3) = -y(1)*sin(y(2));
     dy(4) = (y(1)/y(3))*cos(y(2));
@@ -54,6 +55,4 @@ if (y(3) < r_M)
     dy(5) = 0;
 end
 dy = dy.';
-disp(t)
-disp(M)
 end

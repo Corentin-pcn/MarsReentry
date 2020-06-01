@@ -25,7 +25,7 @@ v0 = sqrt(((2*mu_M)/ratm)-(mu_M/a));
 mi = 1500;
 mf = mi/exp(dva/ISP);
 
-[t,y] = ode15s(@Mars_mission,[0:0.1:2000], [v0 gamma0 ratm 0 mf]);
+[t,y] = ode15s(@Mars_mission,[0:0.1:1785], [v0 gamma0 ratm 0 mf]);
 
 h = y(:,3) - r_M;
 
@@ -54,7 +54,7 @@ title('Mach')
 figure(2)
 
 subplot(2,1,1)
-plot(h/1000,y(:,1))
+plot(y(:,1),h/1000)
 title('speed by altitude')
 
 subplot(2,1,2)
@@ -63,6 +63,6 @@ title('speed by phi')
 
 
 heat_flux = HeatFlux(y(:,1), -14, rho);
-hf_integrated = (trapz([0:0.1:2000],heat_flux)*0.0002778)
+hf_integrated = (trapz([0:0.1:1785],heat_flux)*0.0002778)
 
 max_qd = max(heat_flux)
